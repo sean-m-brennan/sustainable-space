@@ -40,7 +40,8 @@ KERNELS: dict[str, str | dict[str, str | dict[str, str]]] = {
 
 naif_website: str = 'http://naif.jpl.nasa.gov/pub/naif/generic_kernels'
 kernel_dir: str = os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')), 'kernels')
-os.makedirs(kernel_dir, exist_ok=True)
+if not os.path.exists(kernel_dir):
+    os.makedirs(kernel_dir)
 
 def _fetch(site: str, subdir: str, filename: str, force: bool = False):
     url = '%s/%s/%s' %(site, subdir, filename)
