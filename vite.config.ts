@@ -20,4 +20,5 @@ export default defineConfig({
       rootPage: 'index.html'
     }),
   ],
+  base: "/sustainable-space/"
 })
