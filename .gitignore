@@ -1,1 +1,8 @@
 /.idea/
+/.next/
+/node_modules/
+/package-lock.json
+/**/kernels/
+/attic/
+/src/frontend/browser/tz/tz_table.ts
+/src/frontend/browser/tz/zone1970.tab

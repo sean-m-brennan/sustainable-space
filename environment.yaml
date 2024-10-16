@@ -1,3 +1,13 @@
 name: sustainable_space
 dependencies:
-  - python==3.11.*
+  - python==3.12.*
+  - numpy
+  - fastapi
+  - uvicorn
+  - spiceypy
+  - requests
+  - beautifulsoup4
+  - pytest
+  - pytest-asyncio
+  - pip:
+      - iso6709
