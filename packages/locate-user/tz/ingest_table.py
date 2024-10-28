@@ -29,8 +29,8 @@ def parse_tab() -> tuple[{str, TimezoneLocation}, {Location, TimezoneLocation}]:
                 continue
             fields = line.split('\t')
             iso_loc = Location(fields[1])
-            lat = iso_loc.lat.degrees
-            lon = iso_loc.lng.degrees
+            lat = iso_loc.lat.decimal
+            lon = iso_loc.lng.decimal
             zone_to_location[fields[2]] = TimezoneLocation(fields[0], lat, lon, fields[2])
             location_to_zone[(lat, lon)] = TimezoneLocation(fields[0], lat, lon, fields[2])
 
@@ -39,14 +39,14 @@ def parse_tab() -> tuple[{str, TimezoneLocation}, {Location, TimezoneLocation}]:
 
 def zone_location_to_typescript(zone_to_location: {str, TimezoneLocation}):
     with open(os.path.join(this_dir, 'tz_table.ts'), 'w') as tab:
-        tab.write('const tz_table: {[key: string]: [number, number]} = {\n')
+        tab.write('const tzTable: {[key: string]: [number, number]} = {\n')
         for zone, location in zone_to_location.items():
             tab.write('    "%s": [%f, %f],\n' % (zone.strip(), location.latitude, location.longitude))
         tab.write('}\n')
         tab.write('\n')
-        tab.write('export function timezone_to_location(tz: string): [number, number] {\n')
-        tab.write('    if (tz in tz_table)\n')
-        tab.write('        return tz_table[tz]\n')
+        tab.write('export function timezoneToLocation(tz: string): [number, number] {\n')
+        tab.write('    if (tz in tzTable)\n')
+        tab.write('        return tzTable[tz]\n')
         tab.write('    throw new Error(`Bad/unknown timezone: $tz`)\n')
         tab.write('}\n')
         tab.write('\n')
