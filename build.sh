@@ -1,12 +1,12 @@
 #!/bin/sh
 set -x  # debugging
-env
+env | grep END
 
-if [ -n "${FRONTEND+x}" ]; then  # i.e. excluded if FRONTEND specified
+if [ "${FRONTEND}x" = "x" ]; then  # i.e. excluded if FRONTEND specified
   # Generate spice data
   PYTHONPATH=src/app python -m api
 fi
-if [ -n "${BACKEND+x}" ]; then  # i.e. excluded if BACKEND specified
+if [ "${BACKEND}x" = "x" ]; then  # i.e. excluded if BACKEND specified
   # Generate typescript code
-  python src/frontend/browser/tz/ingest_table.py
+  python packages/locate-user/tz/ingest_table.py
 fi
