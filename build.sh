@@ -1,6 +1,5 @@
 #!/bin/sh
-set -x  # debugging
-env | grep END
+set +x  # debugging: off
 
 if [ "${FRONTEND}x" = "x" ]; then  # i.e. excluded if FRONTEND specified
   # Generate spice data
