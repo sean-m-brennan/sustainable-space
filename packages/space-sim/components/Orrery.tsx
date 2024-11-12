@@ -112,6 +112,7 @@ export function Orrery(props: OrreryProps) {
         )()
             .then(() => { setReady(true) })  // should trigger re-render
             .catch((e) => { console.error(e)})
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [propagator.state.flux.initialized])
 
     //state.activeCamera = useThree().camera  // FIXME not working
