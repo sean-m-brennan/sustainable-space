@@ -1,4 +1,5 @@
 #!/bin/sh
+set -x  # debugging
 
 if [ -n "${FRONTEND+x}" ]; then  # i.e. excluded if FRONTEND specified
   # Generate spice data
