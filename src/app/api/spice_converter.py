@@ -109,15 +109,20 @@ def transform_coordinates(position: np.array, original: str, new: str, dt: datet
     return np.dot(converter, position).tolist()
 
 def fixed_to_j2000(lat: float, lon: float, alt: float, dt: datetime) -> list[float]:
-    k_list = ['lsk', 'tf', 'pck/earth']
+    k_list = ['lsk', 'tpc']
     _init_kernels(k_list)
-    phi = lat * (math.pi / 180.0)
-    theta = lon * (math.pi / 180.0)
-    R = alt + JGM3Re
-    rITRF93 = np.array(_spherical_to_cartesian(theta, phi, R))
-    coords = transform_coordinates(rITRF93, 'ITRF93', 'J2000', dt, init=False)
+    lat_rad = lat * np.pi / 180.
+    lon_rad = lon * np.pi / 180.
+    earth_body = 399
+    _, radii = spice.bodvcd(earth_body, 'RADII', 3)
+    equator = radii[0]
+    polar = radii[2]
+    f = (equator - polar) / equator
+    epos = spice.georec(lon_rad, lat_rad, alt, equator, f)
+    coords = transform_coordinates(epos, 'IAU_EARTH', 'J2000', dt, init=False)
+
     spice.kclear()
-    return coords
+    return coords  # cartesian
 
 def celestial_position(body: str, dt: datetime)-> list[float]:
     k_list = ['lsk', 'tpc']

@@ -1,24 +1,29 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
+// @ts-expect-error 'types could not be resolved when respecting package.json "exports"'
 import eslint from 'vite-plugin-eslint'
-import multipage from 'vite-plugin-multipage'
 import glsl from 'vite-plugin-glsl'
 import vercel from 'vite-plugin-vercel'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  server: {
-    port: process.env.PORT as unknown as number,
+  resolve: {
+    alias: [
+      {find: "@", replacement: "/packages"},
+    ],
   },
   plugins: [
     react(),
     glsl(),
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     eslint(),
     vercel(),
-    multipage({
-      pageDir: 'src/frontend/pages',
-      rootPage: 'index.html'
-    }),
   ],
-  base: "/sustainable-space/"
+  base: "/sustainable-space/",
+  server: {
+    headers: {
+      'Cross-Origin-Opener-Policy': 'same-origin',
+      'Cross-Origin-Embedder-Policy': 'require-corp',
+    }
+  }
 })

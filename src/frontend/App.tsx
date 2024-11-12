@@ -2,21 +2,22 @@ import React, {Suspense, useRef, useState} from 'react'
 import { Canvas } from '@react-three/fiber'
 import {Html, OrbitControls} from "@react-three/drei"
 import {Button} from "primereact/button"
-import {ListBox} from "primereact/listbox"
+import {ListBox, ListBoxChangeEvent} from "primereact/listbox"
 
 import 'primeicons/primeicons.css'
 import {Sidebar} from "primereact/sidebar"
 
-import Sun from "./space/sun"
-import {Orrery} from "./space/orrery"
-import {Earth} from "./space/earth"
-import {Moon} from "./space/moon"
+import {Orrery} from "@/space-sim/components/Orrery"
+import {Sol} from "@/space-sim/Sol"
+import {Earth} from "@/space-sim/Earth"
+import {Moon} from "@/space-sim/Moon"
 
-import css from "./space/space.module.css"
+import css from "@/space-sim/space.module.css"
+import {Bloom, DepthOfField, EffectComposer, Noise, Vignette} from "@react-three/postprocessing";
+import {Sun} from "@/space-sim/components/Sun.tsx";
 
 
 export default function App() {
-    const[destination, setDestination] = useState(null)
     interface DestItem {
         label: string
         icon: string
@@ -25,6 +26,8 @@ export default function App() {
         {label: 'Earth', icon: 'pi pi-globe'},
         {label: 'Moon', icon: 'pi pi-globe'},
     ]
+    const[destination, setDestination] = useState<DestItem>(destinations[0])
+
     const sidebarRef = useRef<Sidebar>(null)
     const [visible, setVisible] = useState(false)
 
@@ -50,8 +53,8 @@ export default function App() {
                         Destinations
                     </div>
                     <ListBox value={destination} options={destinations}
-                             onChange={(e) => {
-                                 setDestination(e.value)
+                             onChange={(e: ListBoxChangeEvent) => {
+                                 setDestination(e.value as DestItem)
                                  const sidebar = sidebarRef.current
                                  if (sidebar)
                                      sidebar.getMask().hidePopover()
@@ -68,6 +71,7 @@ export default function App() {
         </div>
     )
     const controls = (<OrbitControls minDistance={.57}/>)
+    // FIXME keyboard controls
     //const controls = (<FlyControls/>)
 
     return (
@@ -79,11 +83,17 @@ export default function App() {
                         <color attach="background" args={["#fff"]}/>
                         <Orrery>
                             {controls}
-                            <Sun/>
+                            <Sol/>
                             <Earth>
                                 <Moon/>
                             </Earth>
                         </Orrery>
+                        <EffectComposer>
+                            {/* <DepthOfField focusDistance={0} focalLength={0.02} bokehScale={2} height={480} /> */}
+                            {/* <Bloom luminanceThreshold={0.5} luminanceSmoothing={0.9} height={300} /> */}
+                            <Noise opacity={0.02} />
+                            {/* <Vignette eskil={false} offset={0.1} darkness={1.1} /> */}
+                        </EffectComposer>
                         <Html>
                             {hud}
                         </Html>
