@@ -40,7 +40,7 @@ export function Celestial({orbit=new RandomOrbitConsts(), surfParams=bareSurface
         return new AtmosphereMaterial(props.atmoParams)
     }, [props.atmoParams])
     let atmoMesh = (<></>)
-    if (atmoGeometry && atmoMaterial) {
+    if (atmoGeometry !== null && atmoMaterial !== null) {
         atmoMesh = (
             <mesh receiveShadow={false}
                   geometry={atmoGeometry} material={atmoMaterial}/>
@@ -61,7 +61,7 @@ export function Celestial({orbit=new RandomOrbitConsts(), surfParams=bareSurface
         return new HazeMaterial(props.hazeParams)
     }, [props.hazeParams, props.cloudParams])
     let hazeMesh = (<></>)
-    if (hazeGeometry && hazeMaterial) {
+    if (hazeGeometry !== null && hazeMaterial !== null) {
         hazeMesh = (
             <mesh receiveShadow={false}
                   geometry={hazeGeometry} material={hazeMaterial}/>
@@ -74,12 +74,12 @@ export function Celestial({orbit=new RandomOrbitConsts(), surfParams=bareSurface
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [surfaceSize, orbit.cloudHeight])
     const cloudMaterial = useMemo(() => {
-        if (!props.cloudParams)
+        if (!props.cloudParams || !props.cloudParams.enable)
             return null
         return new CloudMaterial(props.cloudParams)
     }, [props.cloudParams])
     let cloudMesh = (<></>)
-    if (cloudGeometry && cloudMaterial && cloudMeshRef) {
+    if (cloudGeometry !== null && cloudMaterial !== null && cloudMeshRef !== null) {
         cloudMesh = (
             <mesh ref={cloudMeshRef} castShadow={true} receiveShadow={true}
                   geometry={cloudGeometry} material={cloudMaterial}

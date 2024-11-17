@@ -28,7 +28,7 @@ export default tseslint.config(
             },
             'import/resolver': {
                 node: {
-                    paths: ['./src/frontend'],
+                    paths: ['./src'],
                     extensions: ['.js', '.jsx', '.ts', '.d.ts', '.tsx'],
                 },
                 typescript: {

@@ -19,7 +19,7 @@ import {
     AdditiveBlending,
     Color,
     MeshLambertMaterial,
-    MeshLambertMaterialParameters, SubtractiveBlending,
+    MeshLambertMaterialParameters,
     Vector3,
     WebGLProgramParametersWithUniforms
 } from "three"
@@ -55,6 +55,7 @@ export class HazeMaterial extends MeshLambertMaterial implements OrbitalMaterial
         this.onBeforeCompile = function (shader: WebGLProgramParametersWithUniforms) {
             shader.uniforms.enableHaze = {value: params.enable}
             if (params.enable) {
+                console.log("Haze enabled")
                 shader.uniforms.hazeColor = {value: params.color}
                 shader.uniforms.hazeIntensity = {value: params.intensity}
             }
@@ -96,12 +97,10 @@ export class HazeMaterial extends MeshLambertMaterial implements OrbitalMaterial
                 // language=glsl prefix="void main() {" suffix="}"
                 `
                 #include <emissivemap_fragment>
-                // atmospheric diffusion across the body on lit side
+                // atmospheric diffusion with fresnel across the body on lit side
                 if (enableHaze) {
-                    // DO NOT TOUCH - this is closest, need to remove center bloom
                     float intensity = hazeIntensity * dot( normal, eyeVector );
-                    vec4 atmosphere = vec4(hazeColor, 1.0) * clamp(intensity, -1.0, 0.0);
-                    diffuseColor += atmosphere;
+                    diffuseColor += vec4(hazeColor, 1.0) * clamp(intensity, -1.0, 1.0);
                 }
                 `)
 
@@ -114,6 +113,6 @@ export class HazeMaterial extends MeshLambertMaterial implements OrbitalMaterial
     }
 }
 
-export declare type CloudMaterialProps = MaterialNode<HazeMaterial, [HazeMaterialParameters]>
+export declare type HazeMaterialProps = MaterialNode<HazeMaterial, [HazeMaterialParameters]>
 
 extend({HazeMaterial})

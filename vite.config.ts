@@ -20,10 +20,53 @@ export default defineConfig({
     vercel(),
   ],
   base: "/sustainable-space/",
+  build: {
+    rollupOptions: {
+      external: [
+        "sharp"
+      ]
+    }
+  },
   server: {
     headers: {
       'Cross-Origin-Opener-Policy': 'same-origin',
       'Cross-Origin-Embedder-Policy': 'require-corp',
+    },
+    proxy: {
+      '/nasa/eo': {
+        target: 'https://eoimages.gsfc.nasa.gov',
+        rewrite: (path) => path.replace(/^\/nasa\/eo/, 'https://eoimages.gsfc.nasa.gov'),
+        changeOrigin: true,
+        secure: false,
+        configure: (proxy, _options) => {
+          proxy.on('error', (err, _req, _res) => {
+            console.log('proxy error', err);
+          });
+          proxy.on('proxyReq', (_proxyReq, req, _res) => {
+              console.log('Sending Request to the Target:', req.method, req.url);
+            });
+            proxy.on('proxyRes', (proxyRes, req, _res) => {
+              console.log('Received Response from the Target:', proxyRes.statusCode, req.url);
+            });
+        },
+      },
+      '/nasa/svs': {
+        target: 'https://svs.gsfc.nasa.gov',
+        rewrite: (path) => path.replace(/^\/nasa\/svs/, 'https://svs.gsfc.nasa.gov'),
+        changeOrigin: true,
+        secure: false,
+        configure: (proxy, _options) => {
+          proxy.on('error', (err, _req, _res) => {
+            console.log('proxy error', err);
+          });
+          proxy.on('proxyReq', (_proxyReq, req, _res) => {
+              console.log('Sending Request to the Target:', req.method, req.url);
+            });
+            proxy.on('proxyRes', (proxyRes, req, _res) => {
+              console.log('Received Response from the Target:', proxyRes.statusCode, req.url);
+            });
+        },
+      },
     }
   }
 })

@@ -63,7 +63,7 @@ export const OrbitalSurface = (props: OrbitalSurfaceProps) => {
     const access = useContext(SpaceContext)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const geometry = useMemo(() => new SphereGeometry(props.surfaceSize, props.segmentSize.x, props.segmentSize.y), [])
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    //// eslint-disable-next-line react-hooks/exhaustive-deps
     //const material = useMemo(() => new PlanetMaterial(props.surface), [])
     const [material] = useState(new PlanetMaterial(props.surface))
 

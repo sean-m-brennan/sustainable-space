@@ -14,20 +14,16 @@
    limitations under the License.
 */
 
-import React, {useContext, useRef} from "react"
+import React, {useContext, useEffect, useRef} from "react"
 import {useFrame,} from "@react-three/fiber"
-import {Mesh, Vector3} from "three"
+import {Color, Mesh, Vector2, Vector3} from "three"
 
 import {Satellite} from "./components/Satellite"
 import {OrbitalImages} from "./planetarium/orbital_data"
 import {SpaceContext} from "./components/SpaceContext"
 import {MoonConsts} from "./planetarium/constants"
 import {bareSurface, SurfaceParameters} from "./components/shaders/planet_material.tsx"
-
-import mapDay from './images/moon_lroc_color_poles_4k.png?url'
-import hiMapDay from './images/moon_lroc_color_poles_8k.png?url'
-import mapNight from './images/moon_dark_2048.jpg?url'  // FIXME modify with lights
-import mapNormal from './images/moon_ldem_3_8bit.jpg?url'
+import {imageFiles} from './images/files'
 
 
 export interface MoonProps {
@@ -37,17 +33,20 @@ export interface MoonProps {
 export function Moon(props: MoonProps) {
     const access = useContext(SpaceContext)
     const images: OrbitalImages = {
-        daytime: {low: [mapDay], high: [hiMapDay]},
-        nighttime: mapNight,
-        //elevation: mapNormal,  // FIXME faulty
+        daytime: {low: [imageFiles.moon.small], high: [imageFiles.moon.large]},
+        nighttime: imageFiles.moon.night,
+        //elevation: imageFiles.moon.normal,  // FIXME faulty
     }
     const surfParams = {
         ...bareSurface(access.system),
         images: images,
-        // elevationScale // FIXME
+        highRes: false,
+        normalScale: new Vector2(0.0001, 0.0001), // FIXME
+        emissiveColor: new Color(0xffffff),
+        emissiveIntensity: 0.8,  // stronger intensity from no atmosphere
     } as SurfaceParameters
     const surfaceMeshRef = useRef<Mesh>(null)
-    const positionRef = useRef<Vector3>(new Vector3(2,0,2))
+    const positionRef = useRef<Vector3>(new Vector3(4,0,4))
 
     useFrame(() => {
         if (!access.system.flux.paused) {

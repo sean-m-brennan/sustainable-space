@@ -26,7 +26,7 @@ export class EarthConsts extends OrbitConsts {
 
     cloudHeight = 8.0  // too close will create artifacts
     cloudSpeed = 1.5  // relative to ground
-    atmosphereThickness = 500.0  // km
+    atmosphereThickness = 12.0 * 40 // km
 
     constructor() {
         super({name: ObjectName("Earth"), vernalEquinox: 173, atmosphere: true})

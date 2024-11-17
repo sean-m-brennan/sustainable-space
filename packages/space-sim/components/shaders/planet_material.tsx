@@ -35,12 +35,13 @@ export interface SurfaceParameters {
     emissiveIntensity: number
     highRes: boolean
     lightDirections: Vector3[]  // normalized
+    hasAtmosphere: boolean
 }
 
 export const bareSurface = (system?: OrreryState) => {
     return {images:null, indexer:(_: Date): number => 0, normalScale:new Vector2(0.5,0.5),
         roughness:1.0, metalness:0.0, emissiveColor:new Color(0x909090), emissiveIntensity:0.0, highRes:true,
-        lightDirections:getLightDirections(system)} as SurfaceParameters
+        lightDirections:getLightDirections(system), hasAtmosphere: false} as SurfaceParameters
 }
 
 export interface PlanetMaterialParameters extends MeshStandardMaterialParameters {
@@ -93,7 +94,7 @@ export class PlanetMaterial extends MeshStandardMaterial implements OrbitalMater
                 shader.uniforms.pDirectionalLight = {value: params.lightDirections[0]}
             } else
                 console.log("No lights")
-
+            shader.uniforms.sharp = {value: false } //!params.hasAtmosphere}
 
             shader.fragmentShader = shader.fragmentShader.replace(
                 '#include <common>',
@@ -104,6 +105,7 @@ export class PlanetMaterial extends MeshStandardMaterial implements OrbitalMater
                 //uniform vec3 pDirectionalLights[MAX_LIGHTS];
                 uniform vec3 pDirectionalLight;
                 uniform int atmoLights;
+                uniform bool sharp;
             `)
 
             shader.fragmentShader = shader.fragmentShader.replace(
@@ -126,9 +128,13 @@ export class PlanetMaterial extends MeshStandardMaterial implements OrbitalMater
                 #ifdef USE_NORMALMAP
                     // no normals on dark side
                     vec4 normalColor = texture2D( normalMap, vNormalMapUv );
-                    //for (int i=0; i < atmoLights; i++)
-                    //    normalColor *= 1.0 - smoothstep(0.45, -0.0, dot(normal, pDirectionalLights[i]));
-                    normalColor *= 1.0 - smoothstep(0.45, -0.0, dot(normal, directionalLights[0].direction));
+                    //for (int i=0; i < atmoLights; i++) {
+                    if (sharp) {
+                        //    normalColor *= 1.0 - smoothstep(0.45, -0.0, dot(normal, pDirectionalLights[i]));
+                        normalColor *= 1.0 - smoothstep(0.0, 0.0, dot(normal, directionalLights[0].direction));
+                    } else {
+                        normalColor *= 1.0 - smoothstep(0.45, -0.0, dot(normal, directionalLights[0].direction));
+                    }
                     //normalColor *= 1.0 - smoothstep(0.45, -0.0, dot(normal, pDirectionalLight));
                     normal *= normalColor.rgb;
                 #endif
@@ -136,9 +142,13 @@ export class PlanetMaterial extends MeshStandardMaterial implements OrbitalMater
                 #ifdef USE_EMISSIVEMAP
                     // no emissives on lit side
                     vec4 emissiveColor = texture2D( emissiveMap, vEmissiveMapUv );
-                    //for (int i=0; i < atmoLights; i++)
-                    //    emissiveColor *= 1.0 - smoothstep(-0.09, 0.1, dot(normal, pDirectionalLights[i]));
-                    emissiveColor *= 1.0 - smoothstep(-0.09, 0.1, dot(normal, directionalLights[0].direction));
+                    //for (int i=0; i < atmoLights; i++) {
+                    if (sharp) {
+                        //    emissiveColor *= 1.0 - smoothstep(-0.09, 0.1, dot(normal, pDirectionalLights[i]));
+                        emissiveColor *= 1.0 - smoothstep(0.0, 0.0, dot(normal, directionalLights[0].direction));
+                    } else {
+                        emissiveColor *= 1.0 - smoothstep(-0.09, 0.1, dot(normal, directionalLights[0].direction));
+                    }
                     //emissiveColor *= 1.0 - smoothstep(-0.09, 0.1, dot(normal, pDirectionalLight));
                     totalEmissiveRadiance *= emissiveColor.rgb;
                 #endif

@@ -27,9 +27,7 @@ import {
 import {SpaceContext} from "./SpaceContext"
 import {vector2array} from "../util/coordinates"
 import {starmapSize} from "../planetarium/constants"
-
-//import skymapSmall from '../images/TychoSkymapII.t4_04096x02048.jpg?url'
-import skymapLarge from '../images/TychoSkymapII.t5_16384x08192.jpg?url'
+import {imageFiles} from '../images/files'
 
 
 interface StarsProps {
@@ -42,10 +40,9 @@ const initialProps = {
 
 export default function Stars(props: StarsProps = initialProps) {
     const access = useContext(SpaceContext)
-    const [skymap, setSkymap] = useState(skymapLarge)
     const sphereSize = useRef(props.size / access.system.consts.scale)
     const activeCamera = useThree().camera
-    const texture = useLoader(TextureLoader, skymap)
+    const texture = useLoader(TextureLoader, imageFiles.stars.large)
     texture.wrapS = RepeatWrapping
     texture.repeat.x = -1
     const sphere = new SphereGeometry(sphereSize.current, 64, 64)
@@ -67,6 +64,7 @@ export default function Stars(props: StarsProps = initialProps) {
                 <primitive object={sphere} attach="geometry"/>
                 <meshBasicMaterial map={texture} side={BackSide}/>
             </mesh>
+            <ambientLight intensity={0.02}/> {/* starshine */}
         </>
     )
 }

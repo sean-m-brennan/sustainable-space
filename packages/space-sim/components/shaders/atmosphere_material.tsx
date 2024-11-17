@@ -18,8 +18,7 @@ import {extend, MaterialNode} from "@react-three/fiber"
 import {
     AdditiveBlending,
     BackSide,
-    Color, GLSL1,
-    GLSL3,
+    Color,
     MeshStandardMaterialParameters,
     ShaderMaterial,
     ShaderMaterialParameters,
@@ -85,8 +84,6 @@ export class AtmosphereMaterial extends ShaderMaterial implements OrbitalMateria
                 matParams.uniforms.atmoLightDirections = {value: params.lightDirections}
             }
         }
-        //matParams.depthTest = false
-        //matParams.depthWrite = false
         matParams.vertexShader = vertexShader
         matParams.fragmentShader = fragmentShader
         super(matParams)

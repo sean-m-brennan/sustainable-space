@@ -20,9 +20,11 @@ import {
     Color,
     MeshLambertMaterial,
     MeshLambertMaterialParameters,
-    RepeatWrapping, SRGBColorSpace,
+    RepeatWrapping,
+    SRGBColorSpace,
     Texture,
-    TextureLoader, Vector3,
+    TextureLoader,
+    Vector3,
     WebGLProgramParametersWithUniforms
 } from "three"
 
@@ -61,7 +63,6 @@ export class CloudMaterial extends MeshLambertMaterial implements OrbitalMateria
 
     constructor(params: CloudParameters) {
         const matParams = {transparent: params.transparent} as MeshLambertMaterialParameters
-        matParams.blending = AdditiveBlending
         if (params.enable) {
             const loader = new TextureLoader()
             let texture = params.texture
@@ -74,8 +75,10 @@ export class CloudMaterial extends MeshLambertMaterial implements OrbitalMateria
             }
             texture.colorSpace = SRGBColorSpace
             matParams.map = texture
+            matParams.transparent = params.transparent
+            if (params.transparent)
+                matParams.blending = AdditiveBlending
         }
-        matParams.blending = AdditiveBlending
         super(matParams)
         this.enabled = params.enable
         this.speed = params.speed
@@ -87,11 +90,6 @@ export class CloudMaterial extends MeshLambertMaterial implements OrbitalMateria
                 texture.wrapS = RepeatWrapping
                 shader.uniforms.tClouds = {value: texture}
                 shader.uniforms.uv_xOffset = {value: 0}
-            }
-            shader.uniforms.enableDiffuse = {value: params.enableDiffuse}
-            if (params.enableDiffuse) {
-                shader.uniforms.atmoDiffuseColor = {value: params.diffuseColor}
-                shader.uniforms.atmoDiffuseIntensity = {value: params.diffuseIntensity}
             }
 
             shader.vertexShader = shader.vertexShader.replace(
@@ -120,9 +118,6 @@ export class CloudMaterial extends MeshLambertMaterial implements OrbitalMateria
                 `#include <common>
                 uniform sampler2D tClouds;
                 uniform float uv_xOffset;
-                uniform bool enableDiffuse;
-                uniform float atmoDiffuseIntensity;
-                uniform vec3 atmoDiffuseColor;
                 #define USE_CLOUD_SHADOWS ${computeShadows ? 1: 0}
                 
                 varying vec3 vNormel;
