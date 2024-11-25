@@ -1,11 +1,4 @@
 /.idea/
-/.next/
-/node_modules/
-/**/kernels/
 /attic/
-/packages/locate-user/tz/tz_table.ts
-/packages/locate-user/tz/zone1970.tab
-/dist/
-/.vercel/
-/.vite/
-.vercel
+/**/node_modules/
+/**/dist/

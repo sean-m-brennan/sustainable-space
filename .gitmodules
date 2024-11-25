@@ -1,3 +1,3 @@
 [submodule "space-data-api"]
-	path = space-data-api
+	path = packages/space-data-api
 	url = git@github.com:sean-m-brennan/space-data-api.git
