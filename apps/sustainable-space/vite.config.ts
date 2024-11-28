@@ -12,17 +12,7 @@ if (process.env.TURBO_HASH === undefined) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-argument
     plugins.push(eslint())
 }
-/*
-let resolve = {}
-if (!import.meta.env.PROD)
-    resolve = {
-        resolve: {
-            alias: {
-                "space-sim": path.resolve(__dirname, "../../packages/space-sim/src"),
-            },
-        }
-    }
-*/
+
 // https://vitejs.dev/config/
 export default defineConfig({
     resolve: {
@@ -34,4 +24,11 @@ export default defineConfig({
     },
     plugins: plugins,
     base: "/sustainable-space/",
+    build: {
+        rollupOptions: {
+            external: [
+                'space-sim/images'
+            ],
+        }
+    }
 })
