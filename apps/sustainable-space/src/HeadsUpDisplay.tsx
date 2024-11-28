@@ -10,12 +10,10 @@ import {Sidebar} from "primereact/sidebar"
 import {DataTable} from "primereact/datatable"
 import {Column} from "primereact/column"
 
-import {Hud} from "space-sim/components/Hud"
-import {SpaceContext} from "space-sim/components/SpaceContext"
-import {imageFiles} from "space-sim/images/files"
-import credits from "space-sim/images/credits"
-
-import css from "space-sim/space-sim.css"
+import {Hud} from "space-sim/components/mechanics/Hud"
+import hudCss from "space-sim/components/mechanics/hud.module.css"
+import {SpaceContext} from "space-sim/components/mechanics/SpaceContext"
+import {imageFiles, credits} from "space-sim/components/images"
 
 
 export interface HeadsUpDisplayProps {
@@ -97,14 +95,14 @@ export function HeadsUpDisplay(props: HeadsUpDisplayProps) {
     return (
         <>
             <Hud action={controlsActivate}>
-                <div className={css.title}>Sustainable Space</div>
-                <div className={css.options}>
-                    <Sidebar ref={sidebarRef} className={css.sidebar}
+                <div className={hudCss.title}>Sustainable Space</div>
+                <div className={hudCss.options}>
+                    <Sidebar ref={sidebarRef} className={hudCss.sidebar}
                              style={{top: '-25%', height: '50%', backgroundColor: 'rgba(255, 255, 255, .85)'}}
                              visible={sidebarVisible} position={'right'}
                              onHide={() => setSidebarVisible(false)}
                     >
-                        <div className={css.sbtitle} style={{fontSize: '32px'}}>
+                        <div className={hudCss.sbtitle} style={{fontSize: '32px'}}>
                             Destinations
                         </div>
                         <ListBox value={destination} options={destinations}
@@ -134,7 +132,7 @@ export function HeadsUpDisplay(props: HeadsUpDisplayProps) {
                     </DataTable>
                 </div>
                 {/* Credits button not working; position incorrect */}
-                <div className={css.credits}>
+                <div className={hudCss.credits}>
                     <Sidebar
                         style={{bottom: 0, height: '25%', backgroundColor: 'rgba(255, 255, 255, .85)'}}
                         visible={creditsVisible} position={'right'}

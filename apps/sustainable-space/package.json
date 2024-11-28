@@ -1,6 +1,6 @@
 {
   "name": "sustainable-space",
-  "version": "0.1.0",
+  "version": "1.1.4",
   "authors": [
     "Sean Brennan <sean_m_brennan@mail.com>"
   ],
@@ -20,6 +20,7 @@
     "primereact": "^10.8.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "space-sim": "^1.0.3",
     "three": "^0.169.0",
     "three-stdlib": "^2.33.0"
   },
@@ -40,6 +41,7 @@
     "child-process": "^1.0.2",
     "download": "^8.0.0",
     "eslint": "^9.12.0",
+    "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.12",
     "eslint-plugin-tailwindcss": "^3.13.0",
@@ -60,9 +62,11 @@
     "vite-plugin-vercel": "^9.0.3"
   },
   "scripts": {
-    "dev": "../node_modules/.bin/vite",
-    "build": "./build.sh && tsc -b && vite build",
-    "lint": "../node_modules/.bin/eslint .",
-    "preview": "../node_modules/.bin/vite preview"
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "preview": "vite preview",
+    "clean": "rm -rf dist",
+    "pristine": "npm run clean && rm -rf node_modules"
   }
 }

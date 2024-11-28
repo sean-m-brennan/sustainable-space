@@ -3,20 +3,19 @@ import {PointerLockControls} from "three-stdlib"
 import {Canvas} from '@react-three/fiber'
 import {Preload} from "@react-three/drei"
 
-import {Orrery} from "space-sim/components/Orrery"
-import {Sol} from "space-sim/Sol"
-import {Earth} from "space-sim/Earth"
-import {Moon} from "space-sim/Moon"
+import {Orrery} from "space-sim/components/mechanics/Orrery"
+import {Sol} from "space-sim/components/Sol"
+import {Earth} from "space-sim/components/Earth"
+import {Moon} from "space-sim/components/Moon"
 import {Habitat} from "space-sim/components/Habitat"
-import {MovementControls, MovementControlsProps} from "space-sim/components/MovementControls"
-import {Cameras, CamerasProps} from "space-sim/components/Cameras"
+import {MovementControls, MovementControlsProps} from "space-sim/components/mechanics/MovementControls"
+import {Cameras, CamerasProps} from "space-sim/components/mechanics/Cameras"
 import {habitatSpecsFromJson} from "space-sim/planetarium/habitat_impl"
+import css from "space-sim/components/space-sim.module.css"
 
-import {ErrorBoundary} from "./ErrorBoundary.tsx"
-import {HeadsUpDisplay} from "./HeadsUpDisplay.tsx"
-
-import css from "space-sim/space-sim.css"
-import habitatSpec from "space-sim/habitats.json?raw"
+import {ErrorBoundary} from "./ErrorBoundary"
+import {HeadsUpDisplay} from "./HeadsUpDisplay"
+import habitatSpec from "./habitats.json?raw"
 
 
 export default function App() {
@@ -42,6 +41,14 @@ export default function App() {
     // FIXME scaling
     // FIXME launch movie before script??
 
+    const habs = (
+        <>
+            {habitats.map((hab) => (
+                <Habitat {...hab}/>
+            ))}
+        </>
+    )
+
     return (
         <div className={css.scene}>
             <ErrorBoundary fallback={errorFallback}>
@@ -57,8 +64,8 @@ export default function App() {
                                 <Earth>
                                     <Moon/>
                                     <>
-                                        {habitats.map((hab) => (
-                                            <Habitat {...hab}/>
+                                        {habitats.map((hab, idx) => (
+                                            <Habitat key={idx} {...hab}/>
                                         ))}
                                     </>
                                 </Earth>

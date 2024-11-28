@@ -29,13 +29,17 @@ export default tseslint.config(
                 '@typescript-eslint/parser': ['.ts', '.tsx']
             },
             'import/resolver': {
+                alias: {
+                    map: [["space-sim", "../../packages/space-sim/src"]],
+                    extensions: ['.ts', '.js', '.jsx', '.json']
+                },
                 node: {
                     paths: paths,
                     extensions: ['.js', '.jsx', '.ts', '.d.ts', '.tsx'],
                 },
                 typescript: {
                     alwaysTryTypes: true,
-                    project: ['./tsconfig.json'] //'./tsconfig.json',
+                    project: ['./tsconfig.json']
                 },
             }
         },

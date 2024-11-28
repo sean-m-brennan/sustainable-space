@@ -1,9 +1,9 @@
-[submodule "space-data-api"]
-	path = packages/space-data-api
-	url = git@github.com:sean-m-brennan/space-data-api.git
+[submodule "packages/space-data-api"]
+        path = packages/space-data-api
+        url = git@github.com:sean-m-brennan/space-data-api.git
 [submodule "packages/space-sim"]
-	path = packages/space-sim
-	url = git@github.com:sean-m-brennan/space-sim.git
+        path = packages/space-sim
+        url = git@github.com:sean-m-brennan/space-sim.git
 [submodule "packages/locate-user"]
-	path = packages/locate-user
-	url = git@github.com:sean-m-brennan/locate-user.git
+        path = packages/locate-user
+        url = git@github.com:sean-m-brennan/locate-user.git
