@@ -25,11 +25,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Install python
-        run: |
-          sudo apt-get update
-          sudo apt-get install python3 python3-pip
-          sudo pip install iso6709
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
@@ -45,7 +40,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload dist folder
-          path: './dist'
+          path: './sustainable-space/dist'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
