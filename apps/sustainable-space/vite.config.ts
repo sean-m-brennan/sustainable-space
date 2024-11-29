@@ -1,11 +1,15 @@
 import { defineConfig } from 'vite'
+import path from "node:path"
 import react from '@vitejs/plugin-react-swc'
 // @ts-expect-error 'types could not be resolved when respecting package.json "exports"'
 import eslint from 'vite-plugin-eslint'
-import path from "node:path"
+import libAssetsPlugin from '@laynezh/vite-plugin-lib-assets'
+//import mpa from 'vite-plugin-multi-pages'
 
 const plugins = [
     react(),
+    //mpa(),
+    libAssetsPlugin()
 ]
 // vite-plugin-eslint is incompatible with turbo
 if (process.env.TURBO_HASH === undefined) {
@@ -30,5 +34,31 @@ export default defineConfig({
                 'space-sim/images'
             ],
         }
-    }
+    },
+    server: {
+        headers: {
+            'Cross-Origin-Opener-Policy': 'same-origin',
+            'Cross-Origin-Embedder-Policy': 'require-corp',
+            'Access-Control-Allow-Origin': 'http://localhost:9988',
+        },
+        proxy: {
+            'space-data-api': {
+                target: 'space-data-api.vercel.app',
+                //rewrite: (path) => path.replace(/^\/nasa\/eo/, 'https://eoimages.gsfc.nasa.gov'),
+                changeOrigin: true,
+                secure: false,
+                configure: (proxy, _options) => {
+                    proxy.on('error', (err, _req, _res) => {
+                        console.log('proxy error', err);
+                    });
+                    proxy.on('proxyReq', (_proxyReq, req, _res) => {
+                        console.log('Sending Request to the Target:', req.method, req.url);
+                    });
+                    proxy.on('proxyRes', (proxyRes, req, _res) => {
+                        console.log('Received Response from the Target:', proxyRes.statusCode, req.url);
+                    });
+                },
+            }
+        },
+    },
 })

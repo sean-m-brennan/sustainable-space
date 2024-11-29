@@ -12,7 +12,8 @@
     "eslint": "^8.57.0",
     "eslint-config-turbo": "^2.3.2",
     "prettier": "^3.2.5",
-    "turbo": "^2.3.2"
+    "turbo": "^2.3.2",
+    "vite-plugin-multi-pages": "^0.0.14"
   },
   "packageManager": "npm@10.7.0",
   "workspaces": [

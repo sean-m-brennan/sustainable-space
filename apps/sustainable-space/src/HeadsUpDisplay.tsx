@@ -141,8 +141,8 @@ export function HeadsUpDisplay(props: HeadsUpDisplayProps) {
                         <div>
                             Images courtesy of:
                             <ul>
-                                {credits.map(({url, label}) => (
-                                    <li><a href={url}>{label}</a></li>
+                                {credits.map(({url, label}, i) => (
+                                    <li key={i}><a href={url}>{label}</a></li>
                                 ))}
                             </ul>
                         </div>

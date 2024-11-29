@@ -1,3 +1,4 @@
+import dotenv from "dotenv"
 import React, {Suspense, useRef} from 'react'
 import {PointerLockControls} from "three-stdlib"
 import {Canvas} from '@react-three/fiber'
@@ -11,12 +12,17 @@ import {Habitat} from "space-sim/components/Habitat"
 import {MovementControls, MovementControlsProps} from "space-sim/components/mechanics/MovementControls"
 import {Cameras, CamerasProps} from "space-sim/components/mechanics/Cameras"
 import {habitatSpecsFromJson} from "space-sim/planetarium/habitat_impl"
+import {setOrreryConfigFromUrl} from "space-sim/planetarium/orrery_impl"
 import css from "space-sim/components/space-sim.module.css"
 
 import {ErrorBoundary} from "./ErrorBoundary"
 import {HeadsUpDisplay} from "./HeadsUpDisplay"
-import habitatSpec from "./habitats.json?raw"
 
+import habitatSpec from "./habitats.json?raw"
+//import orrerySpec from "/orrery_config.json"
+
+
+setOrreryConfigFromUrl("/orrery_config.json")
 
 export default function App() {
     const ptrCtrl = useRef<PointerLockControls>(null)
@@ -40,14 +46,6 @@ export default function App() {
     // FIXME tour (scripted) vs free (Movement + Hud) [choice popup]
     // FIXME scaling
     // FIXME launch movie before script??
-
-    const habs = (
-        <>
-            {habitats.map((hab) => (
-                <Habitat {...hab}/>
-            ))}
-        </>
-    )
 
     return (
         <div className={css.scene}>
