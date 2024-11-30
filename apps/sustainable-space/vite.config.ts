@@ -22,6 +22,7 @@ export default defineConfig({
     resolve: {
         alias: {
             "locate-user/": path.resolve(__dirname, "../../packages/locate-user/src/"),
+            "repoblog/": path.resolve(__dirname, "../../packages/repoblog/"),
             "space-data-api/": path.resolve(__dirname, "../../packages/space-data-api/src/"),
             "space-sim/": path.resolve(__dirname, "../../packages/space-sim/"),
         },
@@ -30,6 +31,13 @@ export default defineConfig({
     base: "/sustainable-space/",
     build: {
         rollupOptions: {
+            input: {  // FIXME virtual mpa with preloading behind-the-scenes
+                'index.html': path.resolve(__dirname, "/src/main.tsx"),
+                'tour.html': path.resolve(__dirname, "/src/orrery/tour.tsx"),
+                'explore.html': path.resolve(__dirname, "/src/orrery/explore.tsx"),
+                'blog.html': path.resolve(__dirname, "/src/blog/blog.tsx"),
+                'about.html': path.resolve(__dirname, "/src/about.tsx"),
+            },
             external: [
                 'space-sim/images'
             ],

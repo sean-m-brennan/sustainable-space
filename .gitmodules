@@ -7,3 +7,9 @@
 [submodule "packages/locate-user"]
         path = packages/locate-user
         url = git@github.com:sean-m-brennan/locate-user.git
+[submodule "packages/repoblog"]
+        path = packages/repoblog
+        url = git@github.com:sean-m-brennan/repoblog.git
+[submodule "packages/lens-flare"]
+        path = packages/lens-flare
+        url = git@github.com:sean-m-brennan/R3F-Ultimate-Lens-Flare.git

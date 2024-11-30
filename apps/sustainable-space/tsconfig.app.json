@@ -13,6 +13,7 @@
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
+    "allowSyntheticDefaultImports": true,
 
     /* Linting */
     "strict": true,
@@ -23,8 +24,9 @@
     "composite": true,
     "baseUrl": "..",
     "paths": {
-      "locate-user/*": ["../../packages/locate-user/src/*"],
-      "space-data-api/*": ["../../packages/space-data-api/src/*"],
+      //"locate-user/*": ["../../packages/locate-user/src/*"],
+      //"repoblog/*": ["../../packages/repoblog/src/*"],
+      //"space-data-api/*": ["../../packages/space-data-api/src/*"],
       "space-sim/*": ["../../packages/space-sim/*"]
     },
     "resolveJsonModule": true

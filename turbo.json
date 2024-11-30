@@ -10,6 +10,7 @@
       "cache": false
     },
     "dev": {
+      "dependsOn": ["@andersonmancini/lens-flare#build", "locate-user#build"],
       "cache": false,
       "persistent": true
     },

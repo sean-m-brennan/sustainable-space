@@ -10,10 +10,10 @@ import {Sidebar} from "primereact/sidebar"
 import {DataTable} from "primereact/datatable"
 import {Column} from "primereact/column"
 
-import {Hud} from "space-sim/components/mechanics/Hud"
+import {Hud} from "space-sim/components/mechanics/Hud.tsx"
 import hudCss from "space-sim/components/mechanics/hud.module.css"
-import {SpaceContext} from "space-sim/components/mechanics/SpaceContext"
-import {imageFiles, credits} from "space-sim/components/images"
+import {SpaceContext} from "space-sim/components/mechanics/SpaceContext.tsx"
+import {imageFiles, credits} from "space-sim/components/images.ts"
 
 
 export interface HeadsUpDisplayProps {
