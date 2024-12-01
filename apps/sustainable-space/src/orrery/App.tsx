@@ -64,6 +64,8 @@ export default function App({tour = false}: AppProps) {
                         <color attach="background" args={["#000"]}/>
                         <MovementControls {...controlProps}>
                             <Orrery>
+                                <HeadsUpDisplay ptrCtrlRef={ptrCtrl}/>
+
                                 <Sol/>
                                 <Earth>
                                     <Moon/>
@@ -74,7 +76,6 @@ export default function App({tour = false}: AppProps) {
                                     </>
                                 </Earth>
                                 {/* Mars, Jupiter, Venus, asteroid belt */}
-                                <HeadsUpDisplay ptrCtrlRef={ptrCtrl}/>
                             </Orrery>
                         </MovementControls>
                     </Canvas>

@@ -11,5 +11,5 @@
         path = packages/repoblog
         url = git@github.com:sean-m-brennan/repoblog.git
 [submodule "packages/lens-flare"]
-        path = packages/lens-flare
+	path = extra
         url = git@github.com:sean-m-brennan/R3F-Ultimate-Lens-Flare.git
