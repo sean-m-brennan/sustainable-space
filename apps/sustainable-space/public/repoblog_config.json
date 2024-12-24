@@ -1,5 +1,6 @@
 {
   "apiUrl": "https://api.github.com/repos",
+  "rawUrl": "https://raw.githubusercontent.com/",
   "user": "sean-m-brennan",
   "repo": "sustainable-space",
   "branch": "master",

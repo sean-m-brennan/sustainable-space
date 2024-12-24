@@ -15,7 +15,9 @@ export type HeaderProps = {
 
 export default function Header({pages, additional=()=>(<></>), children}: HeaderProps) {
     const sidebarRef = useRef<Sidebar>(null)
+    const buttonRef = useRef<Button>(null)
     const [sidebarVisible, setSidebarVisible] = useState(false)
+    const [buttonVisible, setButtonVisible] = useState(true)
 
     return (
         <>
@@ -23,17 +25,27 @@ export default function Header({pages, additional=()=>(<></>), children}: Header
                 <div className={css.title}>Sustainable Space</div>
                 <div className={css.options}>
                     <Sidebar ref={sidebarRef} className={css.sidebar}
+                             pt={{header: {className: css.sidebar_header}}}
+                             header={<div className={css.sidebar_header_text}>Navigation</div>}
                              visible={sidebarVisible} position={'right'}
-                             onHide={() => setSidebarVisible(false)}
+                             onHide={() => {
+                                 setButtonVisible(true)
+                                 setSidebarVisible(false)
+                             }}
                     >
                         <nav>
                             <PageLinks pages={pages} routed action={()=>{setSidebarVisible(false)}} />
                         </nav>
                         {additional(css)}
                     </Sidebar>
-                    <Button icon="pi pi-bars" text className={css.options_button}
+                    <Button ref={buttonRef} className={css.options_button}
+                            icon="pi pi-bars" text
                             aria-label={"Destinations"}
-                            onClick={() => setSidebarVisible(true)}
+                            visible={buttonVisible}
+                            onClick={() => {
+                                setButtonVisible(false)
+                                setSidebarVisible(true)
+                            }}
                     />
                 </div>
             </div>

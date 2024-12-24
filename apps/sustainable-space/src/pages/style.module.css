@@ -31,25 +31,42 @@ body {
     height: 50px;
 }
 
-.header .title {
+.title {
     grid-column: 1;
     font-size: 32px;
 }
 
-.header .options {
+.options {
     text-align: right;
     grid-column: 3;
     padding-right: 16px;
     font-size: 32px;
 }
 
-.header .options .sidebar {
-    background-color: rgba(255, 255, 255, .85);
+.sidebar {
+    color: #fff;
+    background-color: #00000066;
     top: -25%;
     height: 50%;
+    display: block;
 }
 
-.header .options_button {
+.sidebar_header {
+    color: white;
+    height: 30px;
+    width: 100%;
+    text-align: center;
+    background-color: #ffffff33;
+}
+
+.sidebar_header_text {
+    color: white;
+    width: 100%;
+    font-size: 20px;
+    text-align: center;
+}
+
+.options_button {
     font-size: 26px;
     border-color: transparent;
     background-color: transparent;
