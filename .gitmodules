@@ -13,3 +13,6 @@
 [submodule "packages/lens-flare"]
 	path = extra
         url = git@github.com:sean-m-brennan/R3F-Ultimate-Lens-Flare.git
+[submodule "packages/fetch-sync"]
+	path = packages/fetch-sync
+	url = git@github.com:sean-m-brennan/fetch-sync.git

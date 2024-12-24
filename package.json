@@ -11,7 +11,8 @@
     "eslint": "^8.57.0",
     "eslint-config-turbo": "^2.3.2",
     "prettier": "^3.2.5",
-    "turbo": "^2.3.2"
+    "turbo": "^2.3.2",
+    "typescript-plugin-css-modules": "^5.1.0"
   },
   "packageManager": "npm@10.7.0",
   "workspaces": [

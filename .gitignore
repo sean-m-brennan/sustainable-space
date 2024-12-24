@@ -6,3 +6,5 @@
 /**/.vite/
 /.turbo/
 /apps/sustainable-space/.turbo/
+/apps/sustainable-space/public/blog-entries/index.html
+/py/__pycache__/

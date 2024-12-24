@@ -1,0 +1,4 @@
+[
+  {"name": "Habitat1", "radius": 1000, "shape": "sphere", "position": {"x": 1, "y": 0, "z": -1}, "rotation": {"x": 0, "y": 0, "z": 0, "order": "XYZ"}},
+  {"name": "Habitat2", "radius": 10000, "shape": "cylinder", "position": {"x": 1.2, "y": 0, "z": -1.2}, "rotation": {"x": 0, "y": 0, "z": 0, "order": "XYZ"}}
+]
