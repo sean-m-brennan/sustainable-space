@@ -16,7 +16,6 @@
     "@nivo/line": "^0.88.0",
     "@nivo/scatterplot": "^0.88.0",
     "hls.js": "^1.5.17",
-    "leaflet": "^1.9.4",
     "marked-base-url": "^1.1.6",
     "nodeplotlib": "^0.7.7",
     "primeicons": "^7.0.0",
@@ -37,6 +36,7 @@
   "devDependencies": {
     "@eslint/js": "^9.11.1",
     "@types/eslint": "^9.6.1",
+    "@types/leaflet": "^1.9.15",
     "@types/node": "^22.7.9",
     "@types/plotly.js": "^2.35.1",
     "@types/react": "^18.3.10",
