@@ -5,6 +5,7 @@ import { Sidebar } from "primereact/sidebar"
 import { Page } from "../pages"
 import { PageLinks } from "./PageLinks.tsx"
 import css from "./style.module.css"
+import icon2 from "/icons/icon2.svg"
 
 
 export type HeaderProps = {
@@ -22,6 +23,7 @@ export default function Header({pages, additional=()=>(<></>), children}: Header
     return (
         <>
             <div className={css.header}>
+                <img src={icon2} className={css.title_icon}/>
                 <div className={css.title}>Sustainable Space</div>
                 <div className={css.options}>
                     <Sidebar ref={sidebarRef} className={css.sidebar}
@@ -34,7 +36,9 @@ export default function Header({pages, additional=()=>(<></>), children}: Header
                              }}
                     >
                         <nav>
-                            <PageLinks pages={pages} routed action={()=>{setSidebarVisible(false)}} />
+                            <PageLinks pages={pages} routed action={() => {
+                                setSidebarVisible(false)
+                            }}/>
                         </nav>
                         {additional(css)}
                     </Sidebar>
