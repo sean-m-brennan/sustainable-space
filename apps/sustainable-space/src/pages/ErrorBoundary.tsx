@@ -2,7 +2,7 @@ import {ReactNode, Component, ErrorInfo} from "react"
 
 interface ErrorBoundaryProps {
     children: ReactNode
-    fallback: ReactNode
+    fallback?: ReactNode
 }
 
 interface ErrorBoundaryState {
@@ -10,7 +10,15 @@ interface ErrorBoundaryState {
     error: ErrorInfo | null
 }
 
-export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+const defaultErrorFallback = (
+    <p>Something went wrong. See the console for details.</p>
+)
+
+export default class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+    static defaultProps = {
+        fallback: defaultErrorFallback
+    }
+
     constructor(props: ErrorBoundaryProps) {
         super(props)
         this.state = { hasError: false, error: null } as ErrorBoundaryState

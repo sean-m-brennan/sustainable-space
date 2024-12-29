@@ -1,18 +1,24 @@
 import React from 'react'
 
 import ITN from "space-sim/components/ITN"
+import {setOrreryConfigFromUrl} from "space-sim/planetarium/orrery_impl"
 
+import ErrorBoundary from "./ErrorBoundary"
 import Header from './Header'
-import {pages} from "../pages"
+import {PageProps, pages} from "../pages"
 import css from "./style.module.css"
+import orrerySpec from "/orrery_config.json?url"
 
-export default function Network() {
-    const positions = {}  // FIXME get current planet positions
 
+setOrreryConfigFromUrl(orrerySpec)
+
+export default function Network({base = ''}: PageProps) {
     return (
-        <div className={`${css.backgrounded} ${css.page}`}>
-            <Header pages={pages}>Interplanetary Travel Network</Header>
-            <ITN positions={positions}/>
-        </div>
+        <ErrorBoundary>
+            <div className={`${css.backgrounded} ${css.page}`}>
+                <Header pages={pages} baseName={base}>Interplanetary Travel Network</Header>
+                <ITN/>
+            </div>
+        </ErrorBoundary>
     )
 }

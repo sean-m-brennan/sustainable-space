@@ -1,5 +1,5 @@
 import sys
-
+# Requires Blender, invoke as `blender --python stl2gltf.py -- <in_file> <out_file>`
 import bpy
 
 start = sys.argv.index('--') + 1

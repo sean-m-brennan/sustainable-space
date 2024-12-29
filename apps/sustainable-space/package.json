@@ -19,6 +19,7 @@
     "marked-base-url": "^1.1.6",
     "nodeplotlib": "^0.7.7",
     "primeicons": "^7.0.0",
+    "react-ga": "^3.3.1",
     "react-plotly.js": "^2.6.0",
     "react-router-dom": "^7.1.0",
     "repoblog": "^1.0.0",

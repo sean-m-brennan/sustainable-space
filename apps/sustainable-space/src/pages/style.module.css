@@ -27,12 +27,13 @@ body {
     padding-left: 10px;
     display: grid;
     grid-template-columns: 72px 2fr 3fr 1fr;
+    gap: 10px;
     color: #fff;
     height: 50px;
     vertical-align: top;
 }
 
-.title {
+.header_title {
     grid-column: 2;
     font-size: 32px;
     vertical-align: middle;
@@ -40,7 +41,7 @@ body {
     padding-left: 15px;
 }
 
-.title_icon {
+.header_title_icon {
     height: 72px;
 }
 
@@ -48,16 +49,16 @@ body {
     text-align: right;
     grid-column: 4;
     padding-right: 16px;
-    font-size: 32px;
     padding-bottom: 8px;
     padding-top: 8px;
+    font-size: 32px;
 }
 
 .sidebar {
     color: #fff;
     background-color: #00000066;
-    top: -25%;
-    height: 50%;
+    top: -15%;
+    height: 70%;
     display: block;
 }
 

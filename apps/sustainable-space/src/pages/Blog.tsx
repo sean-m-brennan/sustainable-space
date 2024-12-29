@@ -2,18 +2,22 @@ import React from 'react'
 
 import RepoBlog, {configureRepoBlog, RepoBlogConfig} from "repoblog"
 
+import ErrorBoundary from "./ErrorBoundary"
 import Header from './Header.tsx'
-import {pages, router} from "../pages.tsx"
+import {PageProps, pages} from "../pages.tsx"
 import css from "./style.module.css"
 import blogSpec from "/repoblog_config.json?url"
 
-export default function Blog() {
+
+export default function Blog({base = ''}: PageProps) {
     const config = configureRepoBlog(blogSpec) as RepoBlogConfig
 
     return (
-        <div className={`${css.backgrounded} ${css.page}`} >
-            <Header pages={pages}>Blog</Header>
-            <RepoBlog config={config} css={css} serverBasename={router.basename}/>
-        </div>
+         <ErrorBoundary>
+             <div className={`${css.backgrounded} ${css.page}`} >
+                 <Header pages={pages} baseName={base}>Blog</Header>
+                 <RepoBlog config={config} css={css} serverBasename={base}/>
+             </div>
+         </ErrorBoundary>
     )
 }

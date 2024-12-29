@@ -1,29 +1,32 @@
-import React, {RefObject, useRef, useState} from 'react'
+import React, {RefObject, useContext, useState} from 'react'
 import {Vector3} from "three"
 import {PointerLockControls} from "three-stdlib"
 import {MapControls, OrthographicCamera, View} from "@react-three/drei"
+import { useThree } from '@react-three/fiber'
+
 import {Button} from "primereact/button"
 import {ListBox, ListBoxChangeEvent} from "primereact/listbox"
-
-import 'primeicons/primeicons.css'
 import {Sidebar} from "primereact/sidebar"
 import {DataTable} from "primereact/datatable"
 import {Column} from "primereact/column"
+import 'primeicons/primeicons.css'
 
 import {Hud} from "space-sim/components/mechanics/Hud.tsx"
 import hudCss from "space-sim/components/mechanics/hud.module.css"
-//import {SpaceContext} from "space-sim/components/mechanics/SpaceContext.tsx"
+import {SpaceContext} from "space-sim/components/mechanics/SpaceContext.tsx"
 import {imageFiles, credits} from "space-sim/components/images.ts"
+
+import Header, { HeaderStyles } from '../Header.tsx'
 import {pages} from "../../pages.tsx"
-import {PageLinks} from "../PageLinks.tsx"
 
 
 export interface HeadsUpDisplayProps {
     ptrCtrlRef: RefObject<PointerLockControls>
+    base?: string
 }
 
 export function HeadsUpDisplay(props: HeadsUpDisplayProps) {
-    //const access = useContext(SpaceContext)
+    const access = useContext(SpaceContext)
 
     interface DestItem {
         label: string
@@ -61,8 +64,6 @@ export function HeadsUpDisplay(props: HeadsUpDisplayProps) {
     }
 
     const [destination, setDestination] = useState<DestItem>(destinations[0])
-    const sidebarRef = useRef<Sidebar>(null)
-    const [sidebarVisible, setSidebarVisible] = useState(false)
     const [creditsVisible, setCreditsVisible] = useState(false)
 
     const controlsActivate = () => {
@@ -74,9 +75,15 @@ export function HeadsUpDisplay(props: HeadsUpDisplayProps) {
         }
     }
 
+    const to_exp = (n: number)=> {
+        return n.toExponential(3);
+    }
+
     // FIXME acquire
+    const {camera} = useThree()
     const coordSys = 'J2K ECI'
-    const pos = [34.569558, 100.334320, 395.303021]
+    let pos = access.system.camera.position // FIXME not correct, plus needs conversion
+    pos = camera.position
     const dt = new Date()
     const v = 506.033042
     const rot = [0.394502, 28.039455, 67.403021]
@@ -88,80 +95,66 @@ export function HeadsUpDisplay(props: HeadsUpDisplayProps) {
         {field: "rotation", header: "Rotational Vector"},
     ]
     const stats = [{
-        position: `${pos[0]} ${pos[1]}, ${pos[2]} ${coordSys}`,
+        position: `${to_exp(pos.x)}, ${to_exp(pos.y)}, ${to_exp(pos.z)} ${coordSys}`,
         datetime: dt.toISOString(),
         velocity: `${v} m/s`,
         rotation: `${rot[0]} ${rot[1]} ${rot[2]}`,
     }]  // FIXME changes during transfer (coord sys, no alt)
 
+    const solSys = (css: HeaderStyles, hide: ()=>void)=> {
+        return (
+            <>
+                <hr/>
+                <div className={css.sidebar_header} style={{fontSize: '32px'}}>
+                    Destinations
+                </div>
+                <ListBox value={destination} options={destinations}
+                         onChange={(e: ListBoxChangeEvent) => {
+                             setDestination(e.value as DestItem)
+                             if (hide)
+                                 hide()
+                         }}
+                         itemTemplate={destTemplate}
+                    //filter filterBy={"label"}
+                />
+            </>
+        )
+    }
+
     return (
         <>
             <Hud action={controlsActivate}>
-                <div className={hudCss.title}>Sustainable Space</div>
-                <div className={hudCss.options}>
-                    <Sidebar ref={sidebarRef} className={hudCss.sidebar}
-                             style={{top: '-25%', height: '50%', backgroundColor: 'rgba(255, 255, 255, .85)'}}
-                             visible={sidebarVisible} position={'right'}
-                             onHide={() => setSidebarVisible(false)}
-                    >
-                        <PageLinks pages={pages} action={() => {
-                            const sidebar = sidebarRef.current
-                            if (sidebar)
-                                sidebar.getMask().hidePopover()
-                        }}/>
-                        <hr/>
-                        <div className={hudCss.sbtitle} style={{fontSize: '32px'}}>
-                            Destinations
-                        </div>
-                        <ListBox value={destination} options={destinations}
-                                 onChange={(e: ListBoxChangeEvent) => {
-                                     setDestination(e.value as DestItem)
-                                     const sidebar = sidebarRef.current
-                                     if (sidebar)
-                                         sidebar.getMask().hidePopover()
-                                 }}
-                                 itemTemplate={destTemplate}
-                            //filter filterBy={"label"}
-                        />
-                    </Sidebar>
-                    <Button icon="pi pi-bars" text
-                            style={{fontSize: 26, borderColor: "transparent", backgroundColor: "transparent"}}
-                            aria-label={"Destinations"}
-                            onClick={() => setSidebarVisible(true)}
-                    />
-                </div>
-                {/********************/}
-                <div style={{position: "relative"}}>
-                    <DataTable value={stats} tableStyle={{minWidth: '50rem'}}
-                               style={{position: "absolute", bottom: 0, left: 0}}>
+                <Header pages={pages} baseName={props.base} extraCss={hudCss}
+                        routed={false} additional={solSys}/>
+                <div className={hudCss.footer}>
+                    <DataTable className={hudCss.stats}
+                               value={stats} tableStyle={{minWidth: '50rem'}}>
                         {statColumns.map((col) => (
                             <Column key={col.field} field={col.field} header={col.header}/>
                         ))}
                     </DataTable>
-                </div>
-                {/* Credits button not working; position incorrect */}
-                <div className={hudCss.credits}>
-                    <Sidebar
-                        style={{bottom: 0, height: '25%', backgroundColor: 'rgba(255, 255, 255, .85)'}}
-                        visible={creditsVisible} position={'right'}
-                        onHide={() => setCreditsVisible(false)}
-                    >
-                        <div>
-                            Images courtesy of:
-                            <ul>
-                                {credits.map(({url, label}, i) => (
-                                    <li key={i}><a href={url}>{label}</a></li>
-                                ))}
-                            </ul>
-                        </div>
-                    </Sidebar>
-                    <Button label={"Credits"} text raised
-                            style={{position: "absolute", bottom: 0, right: 0, fontSize: 10, backgroundColor: "transparent"}}
-                            onClick={() => {
-                                console.log("Credits");
-                                setCreditsVisible(true)
-                            }}
-                    />
+                    <div className={hudCss.credits}>
+                        <Sidebar className={hudCss.credits_sidebar}
+                                 visible={creditsVisible} position={'right'}
+                                 onHide={() => setCreditsVisible(false)}
+                        >
+                            <div>
+                                Images courtesy of:
+                                <ul>
+                                    {credits.map(({url, label}, i) => (
+                                        <li key={i}><a href={url}>{label}</a></li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </Sidebar>
+                        <Button className={hudCss.credits_button}
+                                label={"Credits"} text raised
+                                onClick={() => {
+                                    console.log("Credits");
+                                    setCreditsVisible(true)
+                                }}
+                        />
+                    </div>
                 </div>
             </Hud>
             <View style={{position: 'absolute', bottom: 0, right: 0, width: '10%', height: '10%'}}>

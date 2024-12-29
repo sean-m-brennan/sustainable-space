@@ -1,15 +1,16 @@
 import { Link } from "react-router-dom"
-import {Page, router} from "../pages"
+import {Page} from "../pages"
 import css from "./style.module.css"
 
 export type PageLinksProps ={
     pages: Page[]
+    baseName?: string
     action: () => void
     routed?: boolean
 }
 
-export function PageLinks({pages, routed=false, action}: PageLinksProps) {
-    let base = router.basename ? router.basename : "//"
+export function PageLinks({pages, baseName, routed=false, action}: PageLinksProps) {
+    let base = baseName ? baseName : "//"
     if (base.endsWith('/'))
         base = base.substring(0, base.length - 1)
 

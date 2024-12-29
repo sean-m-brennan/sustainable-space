@@ -1,7 +1,8 @@
 import React from 'react'
 
+import ErrorBoundary from "./ErrorBoundary"
 import Header from './Header'
-import {pages} from "../pages"
+import {PageProps, pages} from "../pages"
 import css from "./style.module.css"
 import map from "/map-2k.png"  // TODO responsive dynamic import per screen size
 
@@ -13,16 +14,18 @@ import map from "/map-2k.png"  // TODO responsive dynamic import per screen size
 // https://commons.wikimedia.org/wiki/File:Stars_Great_Smoky_Mountains_(Unsplash).jpg
 // https://commons.wikimedia.org/wiki/File:Stars_Great_Smoky_Mountains_(Unsplash).jpg
 
-export default function Home() {
+export default function Home({base = ''}: PageProps) {
     return (
-        <div className={`${css.backgrounded} ${css.page} ${css.home}`}>
-            <Header pages={pages}><i>Life out there begins down here.</i></Header>
-            <div className={css.home}>
-                {/* FIXME images and text */}
-                <img style={{width: "100%"}} src={map} alt={""}/>
+        <ErrorBoundary>
+            <div className={`${css.backgrounded} ${css.page} ${css.home}`}>
+                <Header pages={pages} baseName={base}><i>Life out there begins down here.</i></Header>
+                <div className={css.home}>
+                    {/* FIXME images and text */}
+                    <img style={{width: "100%"}} src={map} alt={""}/>
 
-                {/* FIXME credits */}
+                    {/* FIXME credits */}
+                </div>
             </div>
-        </div>
+         </ErrorBoundary>
     )
 }
