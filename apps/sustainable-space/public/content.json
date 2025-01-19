@@ -1,0 +1,83 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "interlogue": { "text": "Prologue1", "span": true },
+                  "name": "Step8"
+                },
+                {
+                  "name": "Step9",
+                  "parents": ["Step3"]
+                }
+              ],
+              "interlogue": { "text": "Prologue2", "span": true },
+              "name": "Step4"
+            },
+            {
+              "children": [
+                {
+                  "name": "Step10"
+                },
+                {
+                  "name": "Step11"
+                }
+              ],
+              "name": "Step5"
+            }
+          ],
+          "interlogue": { "text": "Prologue3", "span": true },
+          "name": "Step2"
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "name": "Step12"
+                },
+                {
+                  "name": "Step13"
+                }
+              ],
+              "name": "Step6",
+              "parents": ["Step2"]
+            },
+            {
+              "children": [
+                {
+                  "name": "Step14"
+                },
+                {
+                  "name": "Step15"
+                }
+              ],
+              "name": "Step7"
+            }
+          ],
+          "name": "Step3"
+        }
+      ],
+      "interlogue": { "text": "Prologue4", "span": true },
+      "name": "Step1"
+    }
+  ],
+  "interlogue": { "text": "Epilogue", "span": true },
+  "name": "Cooperation",
+  "description": "Large-scale cooperation, which we take for granted, is prerequisite to any grand endeavor. Yet this unseen <em>social</em> technology is eroding fast.",
+  "more": {
+    "link": "/cooperation/",
+    "source": "/cooperation.md"
+  },
+  "meta": {
+    "width": "200px",
+    "height": "100px",
+    "shape": "ellipse",
+    "rx": "99px",
+    "ry": "49px"
+  }
+}

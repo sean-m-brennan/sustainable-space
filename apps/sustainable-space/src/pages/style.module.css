@@ -158,6 +158,18 @@ body {
 }
 
 .home {
-    overflow-x: hidden;
+    overflow-x: auto;
 }
 
+.home_credits {
+    color: #fff;
+    background-color: #00000066;
+    bottom: -40%;
+    height: 25%;
+    width: 75%;
+    display: block;
+}
+
+.home_credits_link {
+    color: #fff;
+}

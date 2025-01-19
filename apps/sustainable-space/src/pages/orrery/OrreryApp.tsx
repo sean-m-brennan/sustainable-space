@@ -3,22 +3,22 @@ import {PointerLockControls} from "three-stdlib"
 import {Canvas} from '@react-three/fiber'
 import {Preload} from "@react-three/drei"
 
-import {Orrery} from "space-sim/components/mechanics/Orrery.tsx"
-import {Sol, Earth, Moon} from "space-sim/components/InnerPlanets.tsx"
-import {Habitat} from "space-sim/components/Habitat.tsx"
-import {MovementControls, MovementControlsProps} from "space-sim/components/mechanics/MovementControls.tsx"
-import {Cameras, CamerasProps} from "space-sim/components/mechanics/Cameras.tsx"
-import {habitatSpecsFromJson} from "space-sim/planetarium/habitat_impl.ts"
-import {setOrreryConfigFromUrl} from "space-sim/planetarium/orrery_impl.ts"
+import {Orrery} from "space-sim/components/mechanics/Orrery"
+import {Sol, Earth, Moon} from "space-sim/components/InnerPlanets"
+import {Habitat} from "space-sim/components/Habitat"
+import {MovementControls, MovementControlsProps} from "space-sim/components/mechanics/MovementControls"
+import {Cameras, CamerasProps} from "space-sim/components/mechanics/Cameras"
+import {habitatSpecsFromJson} from "space-sim/planetarium/habitat_impl"
+import {setOrreryConfigFromUrl} from "space-sim/planetarium/orrery_impl"
 import css from "space-sim/components/space-sim.module.css"
 
-import ErrorBoundary from "../ErrorBoundary.tsx"
-import {HeadsUpDisplay} from "./HeadsUpDisplay.tsx"
+import ErrorBoundary from "../ErrorBoundary"
+import {HeadsUpDisplay} from "./HeadsUpDisplay"
+//import SoundTrack from "./SoundTrack"
+import {PageProps} from "../../pages"
 
 import habitatSpec from "./habitats.json?raw"
 import orrerySpec from "/orrery_config.json?url"
-import SoundTrack from "./SoundTrack.tsx";
-import {PageProps} from "../../pages.tsx"
 
 
 setOrreryConfigFromUrl(orrerySpec)

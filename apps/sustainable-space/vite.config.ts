@@ -4,10 +4,12 @@ import react from '@vitejs/plugin-react-swc'
 // @ts-expect-error 'types could not be resolved when respecting package.json "exports"'
 import eslint from 'vite-plugin-eslint'
 //import libAssetsPlugin from '@laynezh/vite-plugin-lib-assets'
+import { imagetools } from 'vite-imagetools'
 
 const plugins = [
     react(),
     //libAssetsPlugin(),
+    imagetools(),
 ]
 // vite-plugin-eslint is incompatible with turbo
 if (process.env.TURBO_HASH === undefined) {

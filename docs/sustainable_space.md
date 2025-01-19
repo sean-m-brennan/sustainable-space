@@ -4,14 +4,6 @@
 
 #### Preface
 
-I've always swum upstream. One doesn't get very far, very fast doing this.
-
-I'd long often felt the shadow of the Leviathan lurking in the depths perpetually flowing downstream. His hideous visage now, here and there, crests the surface, bringing an ocean of turmoil.
-
-Chthulu, murky invertebrate god of the material world, swims ever leftward. That doesn't mean we need to join him.
-
----
-
 Space travel is today out of reach for all but the wealthiest of men and the justification for doing so the flimsiest of ego-gratification. To establish a true foothold in space, there must be both enough economic drive _and_ reachability for at least a critical mass of humans.
 Due to the nature of escaping the gravity well, the cost of working in space has a hard floor, even after commoditization of orbital lift. Therefore, profit (currently at zero) will have to be significant to offset those costs. 
 

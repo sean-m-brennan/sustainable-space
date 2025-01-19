@@ -11,8 +11,11 @@
         path = packages/repoblog
         url = git@github.com:sean-m-brennan/repoblog.git
 [submodule "packages/lens-flare"]
-	path = extra
+        path = extra
         url = git@github.com:sean-m-brennan/R3F-Ultimate-Lens-Flare.git
 [submodule "packages/fetch-sync"]
-	path = packages/fetch-sync
-	url = git@github.com:sean-m-brennan/fetch-sync.git
+        path = packages/fetch-sync
+        url = git@github.com:sean-m-brennan/fetch-sync.git
+[submodule "lib/muudd"]
+        path = lib/muudd
+        url = git@github.com:sean-m-brennan/muudd.git
